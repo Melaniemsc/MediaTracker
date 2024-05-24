@@ -42,7 +42,25 @@ router.post('/sign-up', async (req,res) =>{
 router.get('/sign-in',(req,res) =>{
     res.render('auth/sign-in.ejs');
 })
-router.get
+
+router.post('/sign-in', async (req,res) => {
+    // ! try{
+    const userInDatabase = await User.findOne({username:req.body.username});
+    const validPassword = bcrypt.compareSync(req.body.password, userInDatabase.password);
+    console.log(validPassword);
+    if(!userInDatabase || !validPassword){
+        // !add a error message loggin failed
+        return res.send('Loggin failed. Please try again')
+    }
+    req.session.user = {
+        username: userInDatabase.username,
+        userId: userInDatabase._id,
+    }
+    req.session.save(()=>{
+        res.redirect('/home')
+    })
+
+})
 
 router.get('/sign-out', (req, res) => {
     req.session.destroy();

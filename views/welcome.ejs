@@ -6,11 +6,15 @@
     <title>Home</title>
 </head>
 <body>
-    <%- include('../partials/nav') %>
+    
+<!-- only to sign in and sign out -->
+
     <h1> hello home page</h1>
     <p>you need an account to enjoy the benefits of this community</p>
     <% if (user) { %>
      <p>you already have an account</p>
+     <a href="/home">Home page</a>
+     <a href="/auth/sign-out">Sign Out</a>
     <% } else{%>
     <a href="/auth/sign-up">Sign Up</a>
     <a href="/auth/sign-in">Sign In</a>

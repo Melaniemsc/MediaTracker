@@ -8,6 +8,8 @@ const path = require("path");
 const MongoStore = require("connect-mongo");
 
 const authController = require('./controllers/auth.js')
+const homeController = require('./controllers/home.js')
+const trackerController = require('./controllers/tracker.js')
 
 
 const app = express();
@@ -51,14 +53,13 @@ app.use((req, res, next) => {
 
 app.use(express.static(path.join(__dirname,"public")))
 
-app.use('/auth', authController)
+app.use('/auth', authController);
+app.use('/home', homeController);
+app.use('/home/tracker', trackerController);
 
 app.get("/", (req,res) =>{
   res.render("welcome.ejs")
 });
-
-
-
 
 app.listen(port, () =>{
     console.log("Listening on port ", port);
