@@ -55,7 +55,7 @@ app.use(express.static(path.join(__dirname,"public")))
 
 app.use('/auth', authController);
 app.use('/home', homeController);
-app.use('/home/tracker', trackerController);
+app.use('/tracker', trackerController);
 
 app.get("/", (req,res) =>{
   res.render("welcome.ejs")
