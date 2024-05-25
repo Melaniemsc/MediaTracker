@@ -8,6 +8,13 @@
 <body>
     <%- include('./partials/nav.ejs') %>
     <h1><%= book.name %></h1>
-<p>this is show Page</p>    
+    <%= book.serie %>
+    <%= book.number %>
+    <%= book.year %>
+    <%= book.author %>
+    <%= book.genre %>
+    <form action="/home/<%= book._id %>" method="POST">
+        <button type="submit">Add this book</button>
+    </form>
 </body>
 </html>
