@@ -8,18 +8,12 @@ router.get('/', async (req, res) => {
     const user = await User.findById(req.session.user.userId)
     const books = []
     for (const bookId of user.booksAdded) {
+        
         const book = await Books.findById(bookId);
         books.push(book)
     };
-    books.forEach(book => {
-        console.log(book.name);book.name
-    })
-    
-    res.render('tracker/tracker.ejs', {books})
+    res.render('tracker/tracker.ejs', {books, user})
 })
-
-
-
 
 
 module.exports = router

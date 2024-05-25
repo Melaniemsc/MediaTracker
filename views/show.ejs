@@ -13,9 +13,10 @@
     <%= book.year %>
     <%= book.author %>
     <%= book.genre %>
-    <% user.booksAdded.forEach(bookId => { %>
-    <% if (bookId === book.id) { %>
-        <form action="/home/<%= book._id %>" method="POST">
+
+    <% const result = user.booksAdded.find((value) => value===book.id) %>
+    <% if ( result ) { %>
+        <form action="/home/<%= book._id %>?_method=DELETE" method="POST">
             <button type="submit">Delete this book</button>
         </form>
     <% } else {%>
@@ -23,7 +24,6 @@
             <button type="submit">Add this book</button>
         </form>
         <% }%>
-    <% }) %>
     
 </body>
 </html>

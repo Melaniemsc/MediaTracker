@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Tracker</title>
 </head>
+
 <body>
     <%- include('../partials/nav.ejs') %>
-    <h1>This is your tracker <%= user.username %></h1>
-    <p>ths is the tracker page</p>
-    <ul></ul>
-    <% books.forEach(book => { %>
-        <li ><a href="/home/<%= book._id %>"><%= book.name %></a></li>
-    <% }) %>
-</ul>
-    
-
+        <h1>This is your tracker <%= user.username %>
+        </h1>
+        <p>ths is the tracker page</p>
+        <ul></ul>
+        <% books.forEach(book=> { %>
+            <li><a href="/home/<%= book._id %>">
+                    <%= book.name %>
+                </a></li>
+            <% }) %>
+                </ul>
 </body>
+
 </html>

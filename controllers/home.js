@@ -21,9 +21,22 @@ router.get('/:bookId', async (req,res) =>{
 
 router.post('/:bookId', async (req,res) =>{
     const user = await User.findById(req.session.user.userId)
+    const bookExist = user.booksAdded.includes(req.params.bookId)
+    if(!bookExist){
     await user.booksAdded.push(req.params.bookId)
     await user.save()
     res.send("lles, this work")
+    }else{
+        res.send("book already on the list")
+    }
+})
+
+router.delete('/:bookId', async (req,res) =>{
+    const user = await User.findById(req.session.user.userId)
+    const index = await user.booksAdded.indexOf(req.params.bookId)
+    await user.booksAdded.splice(index,1)
+    await user.save()
+    res.send(`we just delete ${req.params.bookId}`)
 })
 
 
