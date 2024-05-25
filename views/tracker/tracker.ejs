@@ -9,6 +9,11 @@
     <%- include('../partials/nav.ejs') %>
     <h1>This is your tracker <%= user.username %></h1>
     <p>ths is the tracker page</p>
+    <ul></ul>
+    <% books.forEach(book => { %>
+        <li ><a href="/home/<%= book._id %>"><%= book.name %></a></li>
+    <% }) %>
+</ul>
     
 
 </body>

@@ -14,8 +14,9 @@ router.get('/', async (req,res) =>{
 
 router.get('/:bookId', async (req,res) =>{
     // !try add error message canot find book
+    const user = await User.findById(req.session.user.userId)
     const book = await Books.findById(req.params.bookId)
-    res.render('show.ejs', {book})
+    res.render('show.ejs', {book,user})
 })
 
 router.post('/:bookId', async (req,res) =>{

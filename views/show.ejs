@@ -13,8 +13,17 @@
     <%= book.year %>
     <%= book.author %>
     <%= book.genre %>
-    <form action="/home/<%= book._id %>" method="POST">
-        <button type="submit">Add this book</button>
-    </form>
+    <% user.booksAdded.forEach(bookId => { %>
+    <% if (bookId === book.id) { %>
+        <form action="/home/<%= book._id %>" method="POST">
+            <button type="submit">Delete this book</button>
+        </form>
+    <% } else {%>
+        <form action="/home/<%= book._id %>" method="POST">
+            <button type="submit">Add this book</button>
+        </form>
+        <% }%>
+    <% }) %>
+    
 </body>
 </html>
