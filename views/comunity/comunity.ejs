@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunity</title>
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+
+</head>
+<body>
+    <%- include('../partials/nav.ejs') %>
+        <div id="general-div">
+            <h1>Latest reviews</h1>
+            <% if ((typeof reviews != "undefined" && reviews.length>0)) {%>
+                <% reviews.forEach(review=> { %>
+<%= review.book %><br>
+<%= review.latestReview.text %><br>
+<%= review.latestReview.createdAt %><br>
+                    <% })%>
+                        <% }%>
+
+        </div>
+</body>
+
+</html>

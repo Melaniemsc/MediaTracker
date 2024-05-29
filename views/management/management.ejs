@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search</title>
+    <title>Management</title>
     <link rel="stylesheet" href="/stylesheets/main.css" />
 
 </head>
@@ -12,10 +12,10 @@
 <body>
     <%- include('../partials/nav.ejs') %>
         <div id="general-div">
-            <h1>Searh</h1>
-            <p>Tell us what are you looking for <%= user.username %>!</p>
+            <h1>Media tracker manager</h1>
+            <p>Use the following tool to search for new media to be added into the application</p>
             <form action="/management/search" method="GET">
-                <label for="search">Search Here:</label>
+                <label for="search">Search here:</label>
                 <input type="text" name="search" id="search" required /><br>
 
                 <button type="submit" id="search-button">Search</button>
@@ -28,10 +28,10 @@
 <%= bookResult.author %><br>
 <%= bookResult.genre %><br>
 
-                        <input type="hidden" name="name" id="name" required value='<%=bookResult.name%>' /><br>
-                        <input type="hidden" name="year" id="year" required value='<%=bookResult.year%>'/><br>
-                        <input type="hidden" name="author" id="author" required value='<%=bookResult.author%>' /><br>
-                        <input type="hidden" name="genre" id="genre" required value='<%=bookResult.genre%>' /><br>
+                        <input type="hidden" name="name" id="name" required value='<%=bookResult.name%>' />
+                        <input type="hidden" name="year" id="year" required value='<%=bookResult.year%>'/>
+                        <input type="hidden" name="author" id="author" required value='<%=bookResult.author%>' />
+                        <input type="hidden" name="genre" id="genre" required value='<%=bookResult.genre%>' />
 
                         <button type="submit" id="add-book-button">Add this</button>
                     </form>
