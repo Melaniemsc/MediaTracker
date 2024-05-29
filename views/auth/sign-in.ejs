@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In</title>
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+
 </head>
 <body>
+    <div id="general-div">
     <h1>Sign In</h1>
     <form action="/auth/sign-in" method="POST">
 
@@ -16,11 +19,13 @@
         <input type="password" name="password" id="password" required /><br>
 
         <% if (typeof message !== 'undefined') { %>
-            <p><%= message %></p>
+            <p calss="error-message"><%= message %></p>
             <% } %>
 
-        <button type="submit">Sign in</button>
+        <button type="submit" id="sign-button" >Sign in</button>
       </form>
+      <p>Don't have an account? <a href="/auth/sign-up" id="sign-button">Sign Up</a></p>
+    </div>
     
 </body>
 </html>

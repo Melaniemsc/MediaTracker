@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+
+</head>
+<body>
+    <%- include('../partials/nav.ejs') %>
+    <div id="general-div">
+    <h1>Searh</h1>
+    <p>Tell us what are you looking for <%= user.username %>!</p>
+    <form action="/management/search" method="GET">
+        <label for="search">Search Here:</label>
+        <input type="text" name="search" id="search" required /><br>
+
+        <button type="submit" id="search-button" >Search</button>
+    </form>
+    <% if (booksResult>=0) {%>
+    <form action="/management/book" method="POST">
+        <label for="addBook">Add this book</label>
+       
+       <p> <%=booksResult.name %></p>
+
+        <button type="submit" id="search-button" >Add this</button>
+    </form>
+    <% }%>
+    </div>
+</body>
+</html>

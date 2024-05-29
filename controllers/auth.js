@@ -58,10 +58,12 @@ router.post('/sign-in', async (req, res) => {
         req.session.user = {
             username: userInDatabase.username,
             userId: userInDatabase._id,
+            isAdmin: userInDatabase.isAdmin,
         }
         req.session.save(() => {
             res.redirect('/home')
         })
+        
     } catch (err) {
         console.log(err.message);
         req.session.message = err.message;

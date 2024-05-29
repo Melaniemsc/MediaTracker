@@ -10,6 +10,9 @@ const MongoStore = require("connect-mongo");
 const authController = require('./controllers/auth.js')
 const homeController = require('./controllers/home.js')
 const trackerController = require('./controllers/tracker.js')
+const searchController = require('./controllers/search.js')
+const managementController = require('./controllers/management.js')
+
 
 
 const app = express();
@@ -56,8 +59,14 @@ app.use(express.static(path.join(__dirname,"public")))
 app.use('/auth', authController);
 app.use('/home', homeController);
 app.use('/tracker', trackerController);
+app.use('/search', searchController);
+app.use('/management', managementController);
+
 
 app.get("/", (req,res) =>{
+  if(req.session.user){
+    res.redirect('/home')
+  }
   res.render("welcome.ejs")
 });
 

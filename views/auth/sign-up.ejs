@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+
 </head>
 <body>
+    <div id="general-div">
     <h1>Sign Up</h1>
     <form action="/auth/sign-up" method="POST">
         <label for="username">Username:</label>
@@ -19,8 +22,9 @@
         <% if (typeof message !== 'undefined') { %>
             <p><%= message %></p>
             <% } %>
-        <button type="submit">Sign Up</button>
+        <button type="submit" id="sign-button" >Sign Up</button>
       </form>
-    
+      <p>Already have an account? <a href="/auth/sign-in" id="sign-button">Sign In</a></p>
+    </div>
 </body>
 </html>

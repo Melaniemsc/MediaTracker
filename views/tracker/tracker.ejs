@@ -5,20 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Tracker</title>
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+
 </head>
 
 <body>
     <%- include('../partials/nav.ejs') %>
-        <h1>This is your tracker <%= user.username %>
-        </h1>
-        <p>ths is the tracker page</p>
-        <ul></ul>
-        <% books.forEach(book=> { %>
-            <li><a href="/home/<%= book._id %>">
-                    <%= book.name %>
-                </a></li>
-            <% }) %>
-                </ul>
+    <div id="general-div">
+    <h1>This is your tracker <%= user.username %></h1>
+    <% if (typeof message !== 'undefined') { %>
+        <p calss="error-message"><%= message %></p>
+        <% } %>
+    <p>This is the tracker page</p>
+    <ul>
+        <% if (books.length >=1 ) { %>
+            <% books.forEach(book => { %>
+                <li>
+                    <a href="/home/book/<%= book.id %>">
+                        <%= book.name %>
+                    </a>
+                </li>
+        <% }) %>
+        <% } else {%>
+            <p>you dont have any books aded to your list</p>
+            <% } %>
+        
+        
+        
+    </ul>
+    </div>
 </body>
+
 
 </html>

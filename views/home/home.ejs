@@ -4,15 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home page</title>
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+
 </head>
 <body>
     <%- include('../partials/nav.ejs') %>
+    <div id="general-div">
     <h1>Home Page</h1>
-    <p>This is the home page<%= user.username %>!</p>
-    <ul>
+    <p>This is the home page <%= user.username %>!</p>
+    <% if (typeof message !== 'undefined') { %>
+        <p><%= message %></p>
+        <% } %>
+        <h2>Books
+        </h2>
+    <main>
         <% books.forEach(book => { %>
-            <li ><a href="/home/<%= book._id %>"><%= book.name %></a></li>
+            <article class="card">
+                <div class="img-placeholder">
+                    <img src = "<%= book.image %>">
+                </div>
+                <a href="/home/book/<%= book._id %>"><%= book.name %></a>
+              </article>
         <% }) %>
-    </ul>
+
+    </main>
+    </div>
 </body>
 </html>
