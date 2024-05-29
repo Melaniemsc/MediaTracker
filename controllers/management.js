@@ -1,17 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user.js');
 const Books = require('../models/books.js');
-const session = require('express-session');
 const axios = require('axios')
-const booksResult = []
+let isSearch = false
 
 
-router.get('/', (req,res) =>{
-    res.render('management/management.ejs',{booksResult})
+router.get('/', (req, res) => {
+    res.render('management/management.ejs')
 })
 
-router.get('/search', async (req,res) =>{
+router.get('/search', async (req, res) => {
+    const booksResult = []
     const apiResponse = await axios.get(`https://www.googleapis.com/books/v1/volumes?langRestrict=en&q=${req.query.search}&key=${process.env.SECRET_API_KEY}`);
     apiResponse.data.items.forEach(element => {
         let booksApiSchema = {
@@ -22,9 +21,18 @@ router.get('/search', async (req,res) =>{
         }
         booksResult.push(booksApiSchema)
     });
-    console.log(booksResult);
-    // res.send(booksResult)
-    res.render('management/management.ejs',{booksResult})
+    isSearch = true;
+    res.render('management/management.ejs', { booksResult, isSearch })
+})
+
+router.post('/book', async (req, res) => {
+    await Books.create({
+        name: req.body.name,
+        year: new Date(req.body.year).getFullYear(),
+        author: req.body.author,
+        genre: req.body.genre,
+    })
+    res.redirect('/home')
 })
 
 

@@ -34,7 +34,7 @@
                                         <% }%>
 
                                             <form action="/home/book/<%= book._id %>/reviews" method="POST">
-                                                <label for="name">Add your review here</label>
+                                                <label for="name">Add your review here</label></br>
                                                 <textarea type="text" name="text" id="text" required></textarea>
                                                 <button type="submit">Add Review</button>
                                             </form>
@@ -47,7 +47,11 @@
                                                             <p>
                                                                 <%= review.text %> - <%= review.username %>
                                                             </p>
-                                                            
+                                                            <% if (user.isAdmin|| user.id === review.usernameId) { %>
+                                                             <form action="/home/book/<%= book._id %>/reviews/<%= review.id %>/edit" method="GET">
+                                                                <button>Edit</button>
+                                                            </form>
+                                                            <% } %>
                                                         </li>
                                                         <% }) %>
                                                 </ul>

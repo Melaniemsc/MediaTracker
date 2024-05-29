@@ -8,9 +8,11 @@ const session = require('express-session');
 
 router.get('/', async (req, res) => {
     const message = req.session.message
-    const books = await Books.find()
+    let books = await Books.find()
+    books = books.sort(()=>0.5-Math.random())
+    const randomBooks = books.slice(0, 4);
     res.render('home/home.ejs', {
-        books, message
+        books: randomBooks, message
     })
 })
 
@@ -24,6 +26,8 @@ router.get('/book/:bookId', async (req, res) => {
          review = {
              text: element.text,
              username:  reviewerObject.username,
+             id: element._id,
+             usernameId: reviewerObject._id.toString()
          }
          reviews.push(review)
     }
@@ -70,12 +74,33 @@ router.post('/book/:bookId/reviews', async (req, res) => {
 
 })
 
-router.put('/book/:bookId/reviews', async (req,res) =>{
+router.get('/book/:bookId/reviews/:reviewId/edit', async(req,res) =>{
     const book = await Books.findById(req.params.bookId).populate("reviews.reviewer")
-    req.body.reviewer = req.session.user.userId
-    book.reviews.push(req.body)
-    await book.save()
-    res.redirect(`/home/book/${req.params.bookId}`)
+    const review = book.reviews.id(req.params.reviewId)
+    res.render('editReview.ejs', { book, review });
+});
+
+router.put('/book/:bookId/reviews/:reviewId/edit', async (req, res) => {
+    const book = await Books.findById(req.params.bookId).populate("reviews.reviewer")
+    const review = book.reviews.id(req.params.reviewId)
+    if (review && review.reviewer.equals(req.session.user.userId)) {
+        review.text = req.body.textEdit;
+        await book.save();
+        res.redirect(`/home/book/${req.params.bookId}`);
+    } else {
+        res.redirect(`/home/book/${req.params.bookId}`);
+    }
+});
+
+router.delete('/book/:bookId/reviews/:reviewId/edit',async (req, res) => {
+    const book = await Books.findById(req.params.bookId).populate("reviews.reviewer")
+    const review = book.reviews.id(req.params.reviewId) 
+
+    if (review && review.reviewer.equals(req.session.user.userId)) { 
+        book.reviews.pull(review._id)
+        await book.save()
+        res.redirect(`/home/book/${req.params.bookId}`);
+    }
 })
 
 module.exports = router
