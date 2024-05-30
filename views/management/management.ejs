@@ -1,44 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Management</title>
     <link rel="stylesheet" href="/stylesheets/main.css" />
-
 </head>
-
 <body>
     <%- include('../partials/nav.ejs') %>
-        <div id="general-div">
-            <h1>Media tracker manager</h1>
-            <p>Use the following tool to search for new media to be added into the application</p>
-            <form action="/management/search" method="GET">
-                <label for="search">Search here:</label>
-                <input type="text" name="search" id="search" required /><br>
-
-                <button type="submit" id="search-button">Search</button>
-            </form>
-            <% if ((typeof booksResult != "undefined" && booksResult.length>0) && (typeof isSearch != "undefined" && isSearch)) {%>
-                <% booksResult.forEach(bookResult=> { %>
+    <div class="general-div">
+        <h1>Media tracker manager</h1>
+        <p>Use the following tool to search for new media to be added into the application</p>
+        <form action="/management/search" method="GET">
+            <label for="search">Search here:</label>
+            <input type="text" name="search" id="search" required /><br>
+            <button type="submit" id="search-button">Search</button>
+        </form>
+        <% if ((typeof booksResult != "undefined" && booksResult.length>0) && (typeof isSearch != "undefined" && isSearch)) {%>
+            <% booksResult.forEach(bookResult=> { %>
+                <article class="card">
                     <form action="/management/book" method="POST">
                         <label for="addBook"><%= bookResult.name %></label><br>
-<%= bookResult.year %><br>
-<%= bookResult.author %><br>
-<%= bookResult.genre %><br>
-
+                        <%= bookResult.year %><br>
+                        <%= bookResult.author %><br>
+                        <%= bookResult.genre %><br>
+                        <img src="<%= bookResult.image %>" alt="<%= bookResult.name %>"><br>
                         <input type="hidden" name="name" id="name" required value='<%=bookResult.name%>' />
                         <input type="hidden" name="year" id="year" required value='<%=bookResult.year%>'/>
                         <input type="hidden" name="author" id="author" required value='<%=bookResult.author%>' />
                         <input type="hidden" name="genre" id="genre" required value='<%=bookResult.genre%>' />
-
+                        <input type="hidden" name="description" id="description" required value='<%=bookResult.description%>' />
+                        <input type="hidden" name="image" id="image" required value='<%=bookResult.image%>' />
                         <button type="submit" id="add-book-button">Add this</button>
                     </form>
-                    <% })%>
-                        <% }%>
-
-        </div>
+                </article>
+            <% }) %>
+        <% } %>
+    </div>
 </body>
-
 </html>

@@ -11,28 +11,29 @@
 
 <body>
     <%- include('../partials/nav.ejs') %>
-    <div id="general-div">
+    <div class ="general-div">
     <h1>This is your tracker <%= user.username %></h1>
     <% if (typeof message !== 'undefined') { %>
         <p calss="error-message"><%= message %></p>
         <% } %>
-    <p>This is the tracker page</p>
-    <ul>
+        <h2>Your books</h2>
+    <main>
         <% if (books.length >=1 ) { %>
             <% books.forEach(book => { %>
-                <li>
-                    <a href="/home/book/<%= book.id %>">
-                        <%= book.name %>
-                    </a>
-                </li>
+                <article class="card">
+                    <a href="/tracker/book/<%= book._id %>" class="book-name">
+                    <div class="img-placeholder">
+                        
+                        <img src="<%= book.image %>" alt="<%= book.name %>"><br>
+                    </div>
+                    <%= book.name %></a>
+                </a>
+                  </article>
         <% }) %>
         <% } else {%>
             <p>you dont have any books aded to your list</p>
             <% } %>
-        
-        
-        
-    </ul>
+    </main>
     </div>
 </body>
 

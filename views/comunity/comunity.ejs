@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comunity</title>
+    <title>Home page</title>
     <link rel="stylesheet" href="/stylesheets/main.css" />
 
 </head>
 <body>
     <%- include('../partials/nav.ejs') %>
-        <div id="general-div">
-            <h1>Latest reviews</h1>
-            <% if ((typeof reviews != "undefined" && reviews.length>0)) {%>
-                <% reviews.forEach(review=> { %>
-<%= review.book %><br>
-<%= review.latestReview.text %><br>
-<%= review.latestReview.createdAt %><br>
-                    <% })%>
-                        <% }%>
-
+    <div class ="general-div">
+        <h1>Latest reviews</h1>
+        <div id="reviews-section">
+            <% if (typeof reviews !== "undefined" && reviews.length > 0) { %>
+                <ul class="review-list">
+                    <% reviews.forEach(review => { %>
+                        <li class="review-item">
+                            <a href="/tracker/book/<%= review.bookId%>" class="book-name"><strong><%= review.book %></strong></a>
+                            <p><strong>Review: </strong><%= review.latestReview.text %></p>
+                            <p><%= review.reviewTime %></p>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p class="no-reviews">No reviews available</p>
+            <% } %>
         </div>
+    </div>
 </body>
-
 </html>

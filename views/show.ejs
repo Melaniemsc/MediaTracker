@@ -11,45 +11,53 @@
 
 <body>
     <%- include('./partials/nav.ejs') %>
-    <div id="general-div">
-        <h1>
-            <%= book.name %>
-        </h1>
-        <%= book.serie %>
-            <%= book.number %>
-                <%= book.year %>
-                    <%= book.author %>
-                        <%= book.genre %>
+    <div class="general-div">
+        <div id="product-section">
+            <div id="product-image">
+                <img src="<%= book.image %>" alt="<%= book.name %>">
+            </div>
+            <div id="product-details">
+        <h1><%= book.name %></h1>
+        <p><strong>Description:</strong></br> <%= book.description %></p>
+        <p><strong>Series:</strong> <%= book.serie %> (#<%= book.number %>)</p>
+        <p><strong>Year:</strong> <%= book.year %></p>
+        <p><strong>Author:</strong> <%= book.author %></p>
+        <p><strong>Genre:</strong> <%= book.genre %></p>
 
                             <% const result=user.booksAdded.find((value)=> value===book.id) %>
+                            <% if(user.isAdmin){ %>
+                                <form action="/management/book/<%= book._id %>?_method=DELETE" method="POST">
+                                    <button type="submit">Delete this book</button>
+                                </form>
+                                <% } %>
 
                                 <% if ( result ) { %>
-                                    <form action="/home/book/<%= book._id %>?_method=DELETE" method="POST">
-                                        <button type="submit">Delete this book</button>
+                                    <form action="/tracker/book/<%= book._id %>?_method=DELETE" method="POST">
+                                        <button type="submit">Delete this book from my tracker</button>
                                     </form>
                                     <% } else {%>
-                                        <form action="/home/book/<%= book._id %>" method="POST">
-                                            <button type="submit">Add this book</button>
+                                        <form action="/tracker/book/<%= book._id %>" method="POST">
+                                            <button type="submit">Add this book to my tracker</button>
                                         </form>
                                         <% }%>
 
-                                            <form action="/home/book/<%= book._id %>/reviews" method="POST">
+                                            <form action="/tracker/book/<%= book._id %>/reviews" method="POST">
                                                 <label for="name">Add your review here</label></br>
                                                 <textarea type="text" name="text" id="text" required></textarea>
                                                 <button type="submit">Add Review</button>
                                             </form>
-
+                                        </div>
+                                    </div>
+                                    <div id="reviews-section">
                                             <% if (reviews.length>0) { %>
-                                                <p>Reviews:</p>
+                                                <h2>Reviews:</h2>
                                                 <ul>
                                                     <% reviews.forEach(review=> { %>
                                                         <li>
-                                                            <p>
-                                                                <%= review.text %> - <%= review.username %>
-                                                            </p>
+                                                            <p><%= review.username %> says: </br><%= review.text %></p>
                                                             <% if (user.isAdmin|| user.id === review.usernameId) { %>
-                                                             <form action="/home/book/<%= book._id %>/reviews/<%= review.id %>/edit" method="GET">
-                                                                <button>Edit</button>
+                                                             <form action="/tracker/book/<%= book._id %>/reviews/<%= review.id %>/edit" method="GET">
+                                                                <button class="action-button">Edit</button>
                                                             </form>
                                                             <% } %>
                                                         </li>

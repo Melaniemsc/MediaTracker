@@ -21,7 +21,6 @@ router.get('/results', async (req, res) => {
          {"serie": { $regex: req.query.search, $options: 'i' }},
          {"author": { $regex: req.query.search, $options: 'i' }}
         ]})
-    console.log(resultList);
     isSearch = true
     res.render('search/search.ejs', { resultList, isSearch })
 })

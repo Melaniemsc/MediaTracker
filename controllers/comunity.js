@@ -9,11 +9,13 @@ router.get('/', async (req, res) => {
     books.forEach(book => {
         if (book.reviews.length > 0) {
             const latestReview = book.reviews.reduce(function (a, b) {
-                return a > b ? a : b;
+                return a < b ? a : b;
             });
             const review = {
                 book: book.name,
-                latestReview: latestReview
+                bookId: book.id,
+                latestReview: latestReview,
+                reviewTime: formatDate(latestReview.createdAt),
             }
             reviews.push(review)
         }
@@ -21,5 +23,9 @@ router.get('/', async (req, res) => {
     res.render('comunity/comunity.ejs',{reviews})
 })
 
+const formatDate = (dateTimeString) =>{
+    const date = new Date(dateTimeString)
+    return date.toLocaleString();
+}
 
 module.exports = router

@@ -13,6 +13,8 @@ const trackerController = require('./controllers/tracker.js')
 const searchController = require('./controllers/search.js')
 const managementController = require('./controllers/management.js')
 const comunityController = require('./controllers/comunity.js')
+const showController = require('./controllers/show.js')
+
 
 
 
@@ -64,6 +66,7 @@ app.use('/tracker', trackerController);
 app.use('/search', searchController);
 app.use('/management', managementController);
 app.use('/comunity', comunityController);
+app.use('/tracker', showController);
 
 
 

@@ -9,7 +9,7 @@
 </head>
 <body>
     <%- include('../partials/nav.ejs') %>
-    <div id="general-div">
+    <div class ="general-div">
     <h1>Searh</h1>
     <p>Tell us what are you looking for <%= user.username %>!</p>
     <form action="/search/results" method="GET">
@@ -20,11 +20,14 @@
     <% if(typeof resultList != 'undefined' && resultList.length > 0){ %>
     <% resultList.forEach(book => { %>
         <article class="card">
-            <div class="img-placeholder">
-                <img src = "<%= book.image %>">
-            </div>
-            <a href="/home/book/<%= book._id %>"><%= book.name %></a>
-          </article>
+            <a href="/tracker/book/<%= book._id %>" class="book-name">
+                <div class="img-placeholder">
+                    
+                    <img src="<%= book.image %>" alt="<%= book.name %>"><br>
+                </div>
+                <%= book.name %></a>
+            </a>
+              </article>
     <% }) %>
     <% } %>
     </div>

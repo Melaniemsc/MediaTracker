@@ -8,6 +8,7 @@ const reviewSchema = new mongoose.Schema({
 const booksSchema = new mongoose.Schema({
     name: { type: String, required: true },
     serie: { type: String, required: false },
+    description: { type: String, required: false },
     number: { type: Number, required: false },
     year: { type: Number, required: true },
     author: { type: String, required: true },

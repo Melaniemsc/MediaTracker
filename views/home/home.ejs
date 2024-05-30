@@ -9,21 +9,23 @@
 </head>
 <body>
     <%- include('../partials/nav.ejs') %>
-    <div id="general-div">
+    <div class ="general-div">
     <h1>Home Page</h1>
-    <p>This is the home page <%= user.username %>!</p>
+    <p>Welcome <%= user.username %>!</p>
     <% if (typeof message !== 'undefined') { %>
-        <p><%= message %></p>
+        <p class="error-message"><%= message %></p>
         <% } %>
-        <h2>Books
-        </h2>
+        <h2>Books</h2>
     <main>
         <% books.forEach(book => { %>
             <article class="card">
+                <a href="/tracker/book/<%= book._id %>" class="book-name">
                 <div class="img-placeholder">
-                    <img src = "<%= book.image %>">
+                    
+                    <img src="<%= book.image %>" alt="<%= book.name %>"><br>
                 </div>
-                <a href="/home/book/<%= book._id %>"><%= book.name %></a>
+                <%= book.name %></a>
+            </a>
               </article>
         <% }) %>
 
