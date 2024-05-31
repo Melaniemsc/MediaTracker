@@ -4,10 +4,16 @@ const bcrypt = require("bcrypt");
 const User = require('../models/user.js');
 
 router.get('/sign-up', (req, res) => {
-    if (req.session.user) {
-        return res.redirect('/home')
+    try {
+        if (req.session.user) {
+            return res.redirect('/home')
+        }
+        res.render('auth/sign-up.ejs');
+    } catch (err) {
+        
+        req.session.message = err.message;
+        res.redirect('/auth/sign-up');
     }
-    res.render('auth/sign-up.ejs');
 
 });
 
@@ -36,14 +42,20 @@ router.post('/sign-up', async (req, res) => {
             res.redirect('/home')
         })
     } catch (err) {
-        console.log(err.message);
+        
         req.session.message = err.message;
         res.redirect('/auth/sign-up', { message: err.message });
     }
 })
 
 router.get('/sign-in', (req, res) => {
+    try {
     res.render('auth/sign-in.ejs');
+    } catch (err) {
+    
+    req.session.message = err.message;
+    res.redirect('/auth/sign-in');
+}
 })
 
 router.post('/sign-in', async (req, res) => {
@@ -62,17 +74,23 @@ router.post('/sign-in', async (req, res) => {
         req.session.save(() => {
             res.redirect('/home')
         })
-        
+
     } catch (err) {
-        console.log(err.message);
+        
         req.session.message = err.message;
         res.redirect('/auth/sign-in', { message: err.message });
     }
 })
 
 router.get('/sign-out', (req, res) => {
+    try {
     req.session.destroy();
     res.redirect('/');
+} catch (err) {
+    
+    req.session.message = err.message;
+    res.redirect('/');
+}
 });
 
 

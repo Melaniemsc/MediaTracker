@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 
 router.get('/search/book', async (req, res) => {
     const booksResult = []
-    const apiResponse = await axios.get(`https://www.googleapis.com/books/v1/volumes?langRestrict=en&q=${req.query.search}&key=${process.env.SECRET_API_KEY}&maxResults=12`);
+    const apiResponse = await axios.get(`https://www.googleapis.com/books/v1/volumes?langRestrict=en&q=${req.query.search}&key=${process.env.SECRET_BOOKS_API_KEY}&maxResults=12`);
     apiResponse.data.items.forEach(element => {
         let booksApiSchema = {
             name: element.volumeInfo.title,
@@ -31,7 +31,7 @@ router.get('/search/book', async (req, res) => {
 
 router.get('/search/movie', async (req, res) => {
     const moviesResult = []
-    const apiResponse = await axios.get(`http://www.omdbapi.com/?apikey=d2d84e46&type=movie&s=${req.query.search}`);
+    const apiResponse = await axios.get(`http://www.omdbapi.com/?apikey=${SECRET_MOVIES_API_KEY}&type=movie&s=${req.query.search}`);
     apiResponse.data.Search.forEach(element => {
         let movieApiSchema = {
             name: element.Title,
@@ -67,7 +67,7 @@ router.delete('/book/:bookId', async (req, res) => {
 
 
 router.post('/movie', async (req, res) => {
-    const apiResponse = await axios.get(`http://www.omdbapi.com/?apikey=d2d84e46&i=${req.body.id}`);
+    const apiResponse = await axios.get(`http://www.omdbapi.com/?apikey=${SECRET_MOVIES_API_KEY}&i=${req.body.id}`);
     console.log(apiResponse)
     await Movies.create({
         name: apiResponse.data.Title,

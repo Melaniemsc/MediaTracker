@@ -5,8 +5,10 @@ const Movies = require('../models/movies.js');
 
 
 router.get('/', async (req, res) => {
+    try {
     const bookReviews = []
     const books = await Books.find({}).sort([['reviews.createdAt', -1]]).limit(5);
+   
     books.forEach(book => {
         if (book.reviews.length > 0) {
             const latestReview = book.reviews.reduce(function (a, b) {
@@ -39,6 +41,11 @@ router.get('/', async (req, res) => {
         }
     })
     res.render('comunity/comunity.ejs',{bookReviews, movieReviews})
+} catch (err) {
+    console.log(err.message);
+    req.session.message = err.message;
+    res.redirect('/');
+}
 })
 
 const formatDate = (dateTimeString) =>{
