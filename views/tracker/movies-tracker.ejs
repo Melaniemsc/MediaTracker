@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Tracker</title>
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+
+</head>
+
+<body>
+    <%- include('../partials/nav.ejs') %>
+    <div class ="general-div">
+    <h1>This is your tracker <%= user.username %></h1>
+    <% if (typeof message !== 'undefined') { %>
+        <p calss="error-message"><%= message %></p>
+        <% } %>
+        <h2>Your movies</h2>
+    <main>
+        <% if (movies.length >=1 ) { %>
+            <% movies.forEach(movie => { %>
+                <article class="card">
+                    <a href="/tracker/movie/<%= movie._id %>" class="movie-name">
+                    <div class="img-placeholder">
+                        
+                        <img src="<%= movie.image %>" alt="<%= movie.name %>"><br>
+                    </div>
+                    <%= movie.name %></a>
+                </a>
+                  </article>
+        <% }) %>
+        <% } else {%>
+            <p>you dont have any movies aded to your list</p>
+            <% } %>
+    </main>
+    </div>
+</body>
+
+
+</html>

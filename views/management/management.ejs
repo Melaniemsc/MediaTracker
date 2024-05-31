@@ -11,8 +11,8 @@
     <div class="general-div">
         <h1>Media tracker manager</h1>
         <p>Use the following tool to search for new media to be added into the application</p>
-        <form action="/management/search" method="GET">
-            <label for="search">Search here:</label>
+        <form action="/management/search/book" method="GET">
+            <label for="search">Search book here:</label>
             <input type="text" name="search" id="search" required /><br>
             <button type="submit" id="search-button">Search</button>
         </form>
@@ -32,6 +32,25 @@
                         <input type="hidden" name="description" id="description" required value='<%=bookResult.description%>' />
                         <input type="hidden" name="image" id="image" required value='<%=bookResult.image%>' />
                         <button type="submit" id="add-book-button">Add this</button>
+                    </form>
+                </article>
+            <% }) %>
+        <% } %>
+
+        <form action="/management/search/movie" method="GET">
+            <label for="search">Search movie here:</label>
+            <input type="text" name="search" id="search" required /><br>
+            <button type="submit" id="search-button">Search</button>
+        </form>
+        <% if ((typeof moviesResult != "undefined" && moviesResult.length>0) && (typeof isSearch != "undefined" && isSearch)) {%>
+            <% moviesResult.forEach(moviesResult=> { %>
+                <article class="card">
+                    <form action="/management/movie" method="POST">
+                        <label for="addMovie"><%= moviesResult.name %></label><br>
+                        <%= moviesResult.year %><br>
+                        <img src="<%= moviesResult.image %>" alt="<%= moviesResult.name %>"><br>
+                        <input type="hidden" name="id" id="id" required value='<%=moviesResult.id%>' />
+                        <button type="submit" id="add-movie-button">Add this</button>
                     </form>
                 </article>
             <% }) %>

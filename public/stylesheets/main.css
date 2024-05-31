@@ -27,8 +27,16 @@ li {
   list-style-type: none;
 }
 
+.your-list{
+  text-decoration: none;
+  color: white
+}
+.your-list:hover{
+  color: gray;
+}
+
 #sign-button,
-#search-button {
+#search-button, #show-button{
   text-decoration: none;
   border-radius: 8px;
   background-color: #74a9ee;
@@ -43,9 +51,14 @@ li {
 }
 
 #sign-button:hover,
-#search-button:hover {
+#search-button:hover,
+#show-button:hover {
   background-color: grey;
   color: #FFFFFF;
+}
+
+#show-button{
+  font-size: 12px;
 }
 
 .error-message {
@@ -90,8 +103,8 @@ input:focus {
   border-radius: 8px;
   overflow: hidden;
   color: wheat;
-  display: inline-block; /* Change display to inline-block */
-  vertical-align: top; /* Align cards to the top */
+  display: inline-block;
+  vertical-align: top;
 }
 
 .img-placeholder {
@@ -100,14 +113,20 @@ input:focus {
   overflow: hidden;
   border-radius: 8px 8px 0 0;
 }
+.img-placeholder img {
+  width: 200px;
+  height: 250px;
+  object-fit: cover;
+}
 
-.card, a.book-name {
+
+.card, a.book-name, a.movie-name {
   color: wheat;
   text-decoration: none;
 }
 
 
-.card a.book-name:hover {
+.card a.book-name:hover , a.movie-name:hover {
   color: #FFD700;
   text-decoration: underline; 
 }
@@ -138,23 +157,6 @@ input:focus {
   margin: 10px 0;
 }
 
-.action-button {
-  display: inline-block;
-  padding: 10px 20px;
-  margin: 10px 0;
-  border: none;
-  border-radius: 5px;
-  background-color: #74a9ee;
-  color: #0C1447;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.action-button:hover {
-  background-color: grey;
-  color: #FFFFFF;
-}
-
 #reviews-section {
   margin-top: 40px;
 }
@@ -177,10 +179,6 @@ input:focus {
 
 #reviews-section li p {
   margin: 0;
-}
-
-#reviews-section .action-button {
-  margin-top: 10px;
 }
 
 textarea {

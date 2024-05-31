@@ -12,13 +12,13 @@
     <div class ="general-div">
     <h1>Searh</h1>
     <p>Tell us what are you looking for <%= user.username %>!</p>
-    <form action="/search/results" method="GET">
-        <label for="search">Search Here:</label>
+    <form action="/search/results/books" method="GET">
+        <label for="search">Search book here:</label>
         <input type="text" name="search" id="search" required /><br>
         <button type="submit" id="search-button" >Search</button>
     </form>
-    <% if(typeof resultList != 'undefined' && resultList.length > 0){ %>
-    <% resultList.forEach(book => { %>
+    <% if(typeof bookResultList != 'undefined' && bookResultList.length > 0){ %>
+    <% bookResultList.forEach(book => { %>
         <article class="card">
             <a href="/tracker/book/<%= book._id %>" class="book-name">
                 <div class="img-placeholder">
@@ -26,6 +26,27 @@
                     <img src="<%= book.image %>" alt="<%= book.name %>"><br>
                 </div>
                 <%= book.name %></a>
+            </a>
+              </article>
+    <% }) %>
+    <% } %>
+
+
+
+    <form action="/search/results/movies" method="GET">
+        <label for="search">Search movie here:</label>
+        <input type="text" name="search" id="search" required /><br>
+        <button type="submit" id="search-button" >Search</button>
+    </form>
+    <% if(typeof movieResultList != 'undefined' && movieResultList.length > 0){ %>
+    <% movieResultList.forEach(movie => { %>
+        <article class="card">
+            <a href="/tracker/movie/<%= movie._id %>" class="movie-name">
+                <div class="img-placeholder">
+                    
+                    <img src="<%= movie.image %>" alt="<%= movie.name %>"><br>
+                </div>
+                <%= movie.name %></a>
             </a>
               </article>
     <% }) %>

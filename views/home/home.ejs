@@ -28,8 +28,26 @@
             </a>
               </article>
         <% }) %>
-
     </main>
+
+        <h2>Movies</h2>
+        <main>
+
+        <% movies.forEach(movie => { %>
+            <article class="card">
+                <a href="/tracker/movie/<%= movie._id %>" class="movie-name">
+                <div class="img-placeholder">
+                    
+                    <img src="<%= movie.image %>" alt="<%= movie.name %>"><br>
+                </div>
+                <%= movie.name %></a>
+            </a>
+              </article>
+        <% }) %>
+    </main>
+
     </div>
+
+
 </body>
 </html>

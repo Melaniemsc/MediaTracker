@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= movie.name %></title>
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+
+</head>
+
+<body>
+    <%- include('./partials/nav.ejs') %>
+    <div class="general-div">
+        <div id="product-section">
+            <div id="product-image">
+                <img src="<%= movie.image %>" alt="<%= movie.name %>">
+            </div>
+            <div id="product-details">
+        <h1><%= movie.name %></h1>
+        <p><strong>Description:</strong></br> <%= movie.description %></p>
+        <p><strong>Year:</strong> <%= movie.year %></p>
+        <p><strong>Author:</strong> <%= movie.author %></p>
+        <p><strong>Genre:</strong> <%= movie.genre %></p>
+
+                            <% const result=user.moviesAdded.find((value)=> value===movie.id) %>
+                            <% if(user.isAdmin){ %>
+                                <form action="/management/movie/<%= movie._id %>?_method=DELETE" method="POST">
+                                    <button id="show-button" type="submit">Delete this movie</button>
+                                </form>
+                                <% } %>
+
+                                <% if ( result ) { %>
+                                    <form action="/tracker/movie/<%= movie._id %>?_method=DELETE" method="POST">
+                                        <button id="show-button" type="submit">Delete this movie from my tracker</button>
+                                    </form>
+                                    <% } else {%>
+                                        <form action="/tracker/movie/<%= movie._id %>" method="POST">
+                                            <button id="show-button" type="submit">Add this movie to my tracker</button>
+                                        </form>
+                                        <% }%>
+
+                                            <form action="/tracker/movie/<%= movie._id %>/reviews" method="POST">
+                                                <label for="name">Add your review here</label></br>
+                                                <textarea type="text" name="text" id="text" required></textarea>
+                                                <button id="show-button" type="submit">Add Review</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div id="reviews-section">
+                                            <% if (reviews.length>0) { %>
+                                                <h2>Reviews:</h2>
+                                                <ul>
+                                                    <% reviews.forEach(review=> { %>
+                                                        <li>
+                                                            <p><%= review.username %> says: </br><%= review.text %></p>
+                                                            <% if (user.isAdmin|| user.id === review.usernameId) { %>
+                                                             <form action="/tracker/movie/<%= movie._id %>/reviews/<%= review.id %>/edit" method="GET">
+                                                                <button id="show-button">Edit</button>
+                                                            </form>
+                                                            <% } %>
+                                                        </li>
+                                                        <% }) %>
+                                                </ul>
+
+                                                <% } else { %>
+                                                    <p>There are no reviews for this movie</p>
+                                                    <% } %>
+
+    </div>
+</body>
+
+</html>

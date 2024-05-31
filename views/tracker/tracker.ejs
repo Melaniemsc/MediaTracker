@@ -4,38 +4,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Tracker</title>
+    <title>Tracker</title>
     <link rel="stylesheet" href="/stylesheets/main.css" />
 
 </head>
 
 <body>
     <%- include('../partials/nav.ejs') %>
-    <div class ="general-div">
-    <h1>This is your tracker <%= user.username %></h1>
-    <% if (typeof message !== 'undefined') { %>
-        <p calss="error-message"><%= message %></p>
-        <% } %>
-        <h2>Your books</h2>
-    <main>
-        <% if (books.length >=1 ) { %>
-            <% books.forEach(book => { %>
-                <article class="card">
-                    <a href="/tracker/book/<%= book._id %>" class="book-name">
-                    <div class="img-placeholder">
-                        
-                        <img src="<%= book.image %>" alt="<%= book.name %>"><br>
-                    </div>
-                    <%= book.name %></a>
-                </a>
-                  </article>
-        <% }) %>
-        <% } else {%>
-            <p>you dont have any books aded to your list</p>
-            <% } %>
-    </main>
-    </div>
-</body>
+        <div class="general-div">
+            <h1>This is your tracker <%= user.username %>!</h1>
+            <% if (typeof message !=='undefined' ) { %>
+                <p class="error-message">
+                    <%= message %>
+                </p>
+                <% } %>
+                    <h2><a href="/tracker/books" class="your-list">Your books</a></h2>
+                    <main>
+                        <% if (books.length>=1) { %>
+                            <% books.forEach(book=> { %>
+                                <article class="card">
+                                    <a href="/tracker/book/<%= book._id %>" class="book-name">
+                                        <div class="img-placeholder">
 
+                                            <img src="<%= book.image %>" alt="<%= book.name %>"><br>
+                                        </div>
+                                        <%= book.name %>
+                                    </a>
+                                    </a>
+                                </article>
+                                <% }) %>
+                                    <% } else {%>
+                                        <p>You don't have any books added to your list</p>
+                                        <% }%>
+                    </main>
+
+                    <h2><a href="/tracker/movies" class="your-list">Your movies</a></h2>
+                    <main>
+                        <% if (movies.length>0) { %>
+                            <% movies.forEach(movie=> { %>
+                                <article class="card">
+                                    <a href="/tracker/movie/<%= movie._id %>" class="movie-name">
+                                        <div class="img-placeholder">
+
+                                            <img src="<%= movie.image %>" alt="<%= movie.name %>"><br>
+                                        </div>
+                                        <%= movie.name %>
+                                    </a>
+                                    </a>
+                                </article>
+                                <% }) %>
+                                    <% } else {%>
+                                        <p>You don't have any movies added to your list</p>
+                                        <% }%>
+                    </main>
+
+        </div>
+
+
+</body>
 
 </html>

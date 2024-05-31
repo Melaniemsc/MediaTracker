@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home page</title>
+    <title>Comunity</title>
     <link rel="stylesheet" href="/stylesheets/main.css" />
 
 </head>
 <body>
     <%- include('../partials/nav.ejs') %>
     <div class ="general-div">
-        <h1>Latest reviews</h1>
+        <h1>Latest bookReviews</h1>
+        <h2>Books Reviews</h2>
         <div id="reviews-section">
-            <% if (typeof reviews !== "undefined" && reviews.length > 0) { %>
+            <% if (typeof bookReviews !== "undefined" && bookReviews.length > 0) { %>
                 <ul class="review-list">
-                    <% reviews.forEach(review => { %>
+                    <% bookReviews.forEach(review => { %>
                         <li class="review-item">
                             <a href="/tracker/book/<%= review.bookId%>" class="book-name"><strong><%= review.book %></strong></a>
                             <p><strong>Review: </strong><%= review.latestReview.text %></p>
@@ -23,7 +24,23 @@
                     <% }) %>
                 </ul>
             <% } else { %>
-                <p class="no-reviews">No reviews available</p>
+                <p class="no-bookReviews">No reviews available</p>
+            <% } %>
+        </div>
+        <h2>Movies Reviews</h2>
+        <div id="reviews-section">
+            <% if (typeof movieReviews !== "undefined" && movieReviews.length > 0) { %>
+                <ul class="review-list">
+                    <% movieReviews.forEach(review => { %>
+                        <li class="review-item">
+                            <a href="/tracker/movie/<%= review.bookId%>" class="movie-name"><strong><%= review.movie %></strong></a>
+                            <p><strong>Review: </strong><%= review.latestReview.text %></p>
+                            <p><%= review.reviewTime %></p>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p class="no-movieReviews">No reviews available</p>
             <% } %>
         </div>
     </div>

@@ -27,24 +27,24 @@
                             <% const result=user.booksAdded.find((value)=> value===book.id) %>
                             <% if(user.isAdmin){ %>
                                 <form action="/management/book/<%= book._id %>?_method=DELETE" method="POST">
-                                    <button type="submit">Delete this book</button>
+                                    <button id="show-button" type="submit">Delete this book</button>
                                 </form>
                                 <% } %>
 
                                 <% if ( result ) { %>
                                     <form action="/tracker/book/<%= book._id %>?_method=DELETE" method="POST">
-                                        <button type="submit">Delete this book from my tracker</button>
+                                        <button id="show-button" type="submit">Delete this book from my tracker</button>
                                     </form>
                                     <% } else {%>
                                         <form action="/tracker/book/<%= book._id %>" method="POST">
-                                            <button type="submit">Add this book to my tracker</button>
+                                            <button id="show-button" type="submit">Add this book to my tracker</button>
                                         </form>
                                         <% }%>
 
                                             <form action="/tracker/book/<%= book._id %>/reviews" method="POST">
                                                 <label for="name">Add your review here</label></br>
                                                 <textarea type="text" name="text" id="text" required></textarea>
-                                                <button type="submit">Add Review</button>
+                                                <button id="show-button" type="submit">Add Review</button>
                                             </form>
                                         </div>
                                     </div>
@@ -57,7 +57,7 @@
                                                             <p><%= review.username %> says: </br><%= review.text %></p>
                                                             <% if (user.isAdmin|| user.id === review.usernameId) { %>
                                                              <form action="/tracker/book/<%= book._id %>/reviews/<%= review.id %>/edit" method="GET">
-                                                                <button class="action-button">Edit</button>
+                                                                <button id="show-button">Edit</button>
                                                             </form>
                                                             <% } %>
                                                         </li>
