@@ -36,7 +36,7 @@ li {
 }
 
 #sign-button,
-#search-button, #show-button{
+#search-button, #show-button, #edit-button{
   text-decoration: none;
   border-radius: 8px;
   background-color: #74a9ee;
@@ -52,7 +52,7 @@ li {
 
 #sign-button:hover,
 #search-button:hover,
-#show-button:hover {
+#show-button:hover, #edit-button:hover{
   background-color: grey;
   color: #FFFFFF;
 }
