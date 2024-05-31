@@ -8,6 +8,7 @@ const session = require('express-session');
 
 
 router.get('/', async (req, res) => {
+    try {
     const message = req.session.message
     let books = await Books.find()
     books = books.sort(()=>0.5-Math.random())
@@ -22,6 +23,10 @@ router.get('/', async (req, res) => {
         message,
         movies: randomMovies
     })
+} catch (err) {
+    req.session.message = err.message;
+    res.redirect('/');
+}
 
 
 })

@@ -7,6 +7,7 @@ const session = require('express-session');
 
 
 router.get('/book/:bookId', async (req, res) => {
+    try {
     const user = await User.findById(req.session.user.userId)
     const book = await Books.findById(req.params.bookId)
 
@@ -23,6 +24,11 @@ router.get('/book/:bookId', async (req, res) => {
     }
 
     res.render('show-book.ejs', { book, user,reviews })
+} catch (err) {
+    console.log(err.message);
+    req.session.message = err.message;
+    res.redirect('/home');
+}
 
 })
 
@@ -56,21 +62,34 @@ router.delete('/book/:bookId', async (req, res) => {
 })
 
 router.post('/book/:bookId/reviews', async (req, res) => {
+    try {
     const book = await Books.findById(req.params.bookId).populate("reviews.reviewer")
     req.body.reviewer = req.session.user.userId
     book.reviews.push(req.body)
     await book.save()
     res.redirect(`/tracker/book/${req.params.bookId}`)
+} catch (err) {
+    console.log(err.message);
+    req.session.message = err.message;
+    res.redirect('/home');
+}
 
 })
 
 router.get('/book/:bookId/reviews/:reviewId/edit', async(req,res) =>{
+    try {
     const book = await Books.findById(req.params.bookId).populate("reviews.reviewer")
     const review = book.reviews.id(req.params.reviewId)
     res.render('editReview.ejs', { book, review });
+} catch (err) {
+    console.log(err.message);
+    req.session.message = err.message;
+    res.redirect('/home');
+}
 });
 
 router.put('/book/:bookId/reviews/:reviewId/edit', async (req, res) => {
+    try {
     const book = await Books.findById(req.params.bookId).populate("reviews.reviewer")
     const review = book.reviews.id(req.params.reviewId)
     if (review && review.reviewer.equals(req.session.user.userId)) {
@@ -80,9 +99,15 @@ router.put('/book/:bookId/reviews/:reviewId/edit', async (req, res) => {
     } else {
         res.redirect(`/tracker/book/${req.params.bookId}`);
     }
+} catch (err) {
+    console.log(err.message);
+    req.session.message = err.message;
+    res.redirect('/home');
+}
 });
 
 router.delete('/book/:bookId/reviews/:reviewId/edit',async (req, res) => {
+    try {
     const book = await Books.findById(req.params.bookId).populate("reviews.reviewer")
     const review = book.reviews.id(req.params.reviewId) 
 
@@ -91,17 +116,16 @@ router.delete('/book/:bookId/reviews/:reviewId/edit',async (req, res) => {
         await book.save()
         res.redirect(`/tracker/book/${req.params.bookId}`);
     }
+} catch (err) {
+    console.log(err.message);
+    req.session.message = err.message;
+    res.redirect('/home');
+}
 })
 
 
-
-
-
-
-
-
-
 router.get('/movie/:movieId', async (req, res) => {
+    try {
     const user = await User.findById(req.session.user.userId)
     const movie = await Movie.findById(req.params.movieId)
 
@@ -118,7 +142,11 @@ router.get('/movie/:movieId', async (req, res) => {
     }
 
     res.render('show-movie.ejs', { movie, user,reviews })
-
+} catch (err) {
+    console.log(err.message);
+    req.session.message = err.message;
+    res.redirect('/home');
+}
 })
 
 router.post('/movie/:movieId', async (req, res) => {
@@ -151,21 +179,34 @@ router.delete('/movie/:movieId', async (req, res) => {
 })
 
 router.post('/movie/:movieId/reviews', async (req, res) => {
+    try {
     const movie = await Movies.findById(req.params.movieId).populate("reviews.reviewer")
     req.body.reviewer = req.session.user.userId
     movie.reviews.push(req.body)
     await movie.save()
     res.redirect(`/tracker/movie/${req.params.movieId}`)
+} catch (err) {
+    console.log(err.message);
+    req.session.message = err.message;
+    res.redirect('/home');
+}
 
 })
 
 router.get('/movie/:movieId/reviews/:reviewId/edit', async(req,res) =>{
+    try {
     const movie = await Movies.findById(req.params.movieId).populate("reviews.reviewer")
     const review = movie.reviews.id(req.params.reviewId)
     res.render('editReview.ejs', { movie, review });
+} catch (err) {
+    console.log(err.message);
+    req.session.message = err.message;
+    res.redirect('/home');
+}
 });
 
 router.put('/movie/:movieId/reviews/:reviewId/edit', async (req, res) => {
+    try {
     const movie = await Movies.findById(req.params.movieId).populate("reviews.reviewer")
     const review = movie.reviews.id(req.params.reviewId)
     if (review && review.reviewer.equals(req.session.user.userId)) {
@@ -175,9 +216,15 @@ router.put('/movie/:movieId/reviews/:reviewId/edit', async (req, res) => {
     } else {
         res.redirect(`/tracker/movie/${req.params.movieId}`);
     }
+} catch (err) {
+    console.log(err.message);
+    req.session.message = err.message;
+    res.redirect('/home');
+}
 });
 
 router.delete('/movie/:movieId/reviews/:reviewId/edit',async (req, res) => {
+    try {
     const movie = await Movies.findById(req.params.movieId).populate("reviews.reviewer")
     const review = movie.reviews.id(req.params.reviewId) 
 
@@ -186,6 +233,11 @@ router.delete('/movie/:movieId/reviews/:reviewId/edit',async (req, res) => {
         await movie.save()
         res.redirect(`/tracker/movie/${req.params.movieId}`);
     }
+} catch (err) {
+    console.log(err.message);
+    req.session.message = err.message;
+    res.redirect('/home');
+}
 })
 
 module.exports = router

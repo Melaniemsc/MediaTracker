@@ -8,10 +8,16 @@ let isSearch = false
 
 
 router.get('/', (req, res) => {
+    try{
     res.render('management/management.ejs')
+} catch (err) {
+    req.session.message = err.message;
+    res.redirect('/');
+}
 })
 
 router.get('/search/book', async (req, res) => {
+    try {
     const booksResult = []
     const apiResponse = await axios.get(`https://www.googleapis.com/books/v1/volumes?langRestrict=en&q=${req.query.search}&key=${process.env.SECRET_BOOKS_API_KEY}&maxResults=12`);
     apiResponse.data.items.forEach(element => {
@@ -27,9 +33,14 @@ router.get('/search/book', async (req, res) => {
     });
     isSearch = true;
     res.render('management/management.ejs', { booksResult, isSearch })
+} catch (err) {
+    req.session.message = err.message;
+    res.redirect('/');
+}
 })
 
 router.get('/search/movie', async (req, res) => {
+    try {
     const moviesResult = []
     const apiResponse = await axios.get(`http://www.omdbapi.com/?apikey=${process.env.SECRET_MOVIES_API_KEY}&type=movie&s=${req.query.search}`);
     apiResponse.data.Search.forEach(element => {
@@ -43,9 +54,14 @@ router.get('/search/movie', async (req, res) => {
     });
     isSearch = true;
     res.render('management/management.ejs', {moviesResult,isSearch })
+} catch (err) {
+    req.session.message = err.message;
+    res.redirect('/');
+}
 })
 
 router.post('/book', async (req, res) => {
+    try {
     await Books.create({
         name: req.body.name,
         year: new Date(req.body.year).getFullYear(),
@@ -55,18 +71,28 @@ router.post('/book', async (req, res) => {
         image: req.body.image,
     })
     res.redirect('/home')
+} catch (err) {
+    req.session.message = err.message;
+    res.redirect('/');
+}
 })
 
 router.delete('/book/:bookId', async (req, res) => {
+    try {
     if(req.session.user.isAdmin){
         await User.updateMany({booksAdded:req.params.bookId},{ $pull: { booksAdded: req.params.bookId } })
         await Books.findByIdAndDelete(req.params.bookId)
     }
     res.redirect('/home')
+} catch (err) {
+    req.session.message = err.message;
+    res.redirect('/');
+}
 })
 
 
 router.post('/movie', async (req, res) => {
+    try {
     const apiResponse = await axios.get(`http://www.omdbapi.com/?apikey=${process.env.SECRET_MOVIES_API_KEY}&i=${req.body.id}`);
     console.log(apiResponse)
     await Movies.create({
@@ -78,13 +104,22 @@ router.post('/movie', async (req, res) => {
         image: apiResponse.data.Poster,
     })
     res.redirect('/home')
+} catch (err) {
+    req.session.message = err.message;
+    res.redirect('/');
+}
 })
 
 router.delete('/movie/:movieId', async (req, res) => {
+    try {
     if(req.session.user.isAdmin){
         await User.updateMany({moviesAdded:req.params.movieId},{ $pull: { moviesAdded: req.params.movieId } })
         await Books.findByIdAndDelete(req.params.movieId)
     }
     res.redirect('/home')
+} catch (err) {
+    req.session.message = err.message;
+    res.redirect('/');
+}
 })
 module.exports = router

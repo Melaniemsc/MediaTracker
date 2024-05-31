@@ -8,14 +8,26 @@ const axios = require('axios')
 let isSearch = false
 
 router.get('/', (req, res) => {
+    
+    try {
     res.render('search/search.ejs')
+} catch (err) {
+    req.session.message = err.message;
+    res.redirect('/');
+}
 })
 
 router.post('/', (req, res) => {
+    try {
     res.redirect('/search/results')
+} catch (err) {
+    req.session.message = err.message;
+    res.redirect('/');
+}
 })
 
-router.get('/results/books', async (req, res) => {    
+router.get('/results/books', async (req, res) => {  
+    try {  
     const bookResultList = await Books.find({
         $or:[
          {"name": { $regex: req.query.search, $options: 'i' }},
@@ -25,9 +37,14 @@ router.get('/results/books', async (req, res) => {
         ]})
     isSearch = true
     res.render('search/search.ejs', { bookResultList, isSearch })
+} catch (err) {
+    req.session.message = err.message;
+    res.redirect('/');
+}
 })
 
-router.get('/results/movies', async (req, res) => {    
+router.get('/results/movies', async (req, res) => {  
+    try {  
     const movieResultList = await Movies.find({
         $or:[
          {"name": { $regex: req.query.search, $options: 'i' }},
@@ -36,6 +53,10 @@ router.get('/results/movies', async (req, res) => {
         ]})
     isSearch = true
     res.render('search/search.ejs', { movieResultList, isSearch })
+} catch (err) {
+    req.session.message = err.message;
+    res.redirect('/');
+}
 })
 
 
